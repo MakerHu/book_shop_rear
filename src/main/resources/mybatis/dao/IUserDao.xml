@@ -6,4 +6,7 @@
     <select id="findByEmail" parameterType="String" resultType="User">
         select * from user where email = #{email}
     </select>
+    <insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into user(name,email,password,tel,role) values (#{name},#{email},#{password},#{tel},#{role})
+    </insert>
 </mapper>

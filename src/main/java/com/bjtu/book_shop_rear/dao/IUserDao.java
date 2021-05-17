@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository("userDao")
 public interface IUserDao {
-    public User findByEmail(String email);
+    User findByEmail(String email);
+    void addUser(User user);
 }

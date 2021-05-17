@@ -27,8 +27,8 @@ public class LoginController {
             User user = userService.findByEmail(email);
             if (user != null){
 
-                if (user.getPassword().equals(password)){
-//                if (encoding.matches(password,user.getPassword())){
+//                if (user.getPassword().equals(password)){
+                if (encoding.matches(password,user.getPassword())){
                     //设置session值
                     HttpSession session = request.getSession();
                     session.setAttribute("user",user);
