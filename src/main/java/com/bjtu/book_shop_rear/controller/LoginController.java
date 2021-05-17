@@ -1,13 +1,12 @@
 package com.bjtu.book_shop_rear.controller;
 
+import com.bjtu.book_shop_rear.common.Result;
 import com.bjtu.book_shop_rear.dao.IUserDao;
 import com.bjtu.book_shop_rear.entity.User;
 import com.bjtu.book_shop_rear.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,18 +18,48 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping
-//    public User findByEmail(@RequestParam String email){
-//        return userService.findByEmail(email);
-//    }
+    @Autowired
+    private BCryptPasswordEncoder encoding;
 
-    @GetMapping
-    public User findByEmail(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        session.setAttribute("msg","session信息");
-        System.out.println(session);
-        return userService.findByEmail("hjh@qq.com");
+    @PostMapping
+    public Result<User> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request){
+        try{
+            User user = userService.findByEmail(email);
+            if (user != null){
+
+                if (user.getPassword().equals(password)){
+//                if (encoding.matches(password,user.getPassword())){
+                    //设置session值
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user",user);
+                    session.setAttribute("msg","测试session");
+
+                    //消除返回前端的收能过户数据中的重要信息
+                    user.setPassword("");
+                    return Result.success(user);
+                }else {
+                    return Result.error("1", "用户名或密码错误！");
+                }
+            }else{
+                return Result.error("2", "用户名或密码错误！");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+//        return userService.findByEmail(email);
     }
+
+//    @PostMapping
+//    public User findByEmail(HttpServletRequest request){
+//        User user = userService.findByEmail("hjh@qq.com");
+//        HttpSession session = request.getSession();
+//        session.setAttribute("msg","session信息");
+//        session.setAttribute("user",user);
+//        System.out.println(session);
+//        return user;
+//    }
 
     @GetMapping("/test")
     public void test(HttpServletRequest request){
