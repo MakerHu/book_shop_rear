@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
     private IBookDao bookDao;
 
     //每页字节数
-    @Value("1024")
+    @Value("2048")
     private int PAGE_BYTES;
     //总页数
     private int pages;

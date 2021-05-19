@@ -111,7 +111,7 @@ public class BookController {
         }
     }
 
-    @GetMapping(value = "/download")
+    @PostMapping(value = "/download")
     public ResponseEntity<byte[]> downloadBook(@RequestParam(value = "bookId") int bookId, @RequestHeader("User-Agent") String userAgent) throws Exception {
         Book book = bookService.findById(bookId);
         String localPath = new File("").getAbsolutePath();
