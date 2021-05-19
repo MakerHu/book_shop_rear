@@ -24,8 +24,8 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping(value = "/read")
-    public Result<ContentPage> getBook(@RequestParam(value = "bookId") int bookId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+    @PostMapping(value = "/read")
+    public Result<ContentPage> getBook(@RequestParam(value = "bookId") Integer bookId, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
         try {
             return Result.success(bookService.getContentPage(bookId,pageNum));
         } catch (Exception exception) {
