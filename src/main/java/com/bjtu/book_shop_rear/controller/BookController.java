@@ -81,7 +81,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/booklist")
+    @PostMapping("/booklist")
     public Result<PageInfo<Book>> getBookList(@RequestParam Integer pageNum,@RequestParam Integer pageSize){
         PageInfo pageInfo = bookService.getBookList(pageNum,pageSize);
         return Result.success(pageInfo);
