@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/user")
 public class LoginController {
     @Autowired
     private UserService userService;
@@ -21,7 +21,7 @@ public class LoginController {
     @Autowired
     private BCryptPasswordEncoder encoding;
 
-    @PostMapping
+    @PostMapping("/login")
     public Result<User> login(@RequestParam String email, @RequestParam String password, HttpServletRequest request){
         try{
             User user = userService.findByEmail(email);
