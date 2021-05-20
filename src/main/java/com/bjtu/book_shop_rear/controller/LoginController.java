@@ -68,4 +68,11 @@ public class LoginController {
         String msg = session.getAttribute("msg").toString();
         System.out.println(msg);
     }
+
+    @PostMapping("/logout")
+    public Result logout(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("user");
+        return Result.success();
+    }
 }
